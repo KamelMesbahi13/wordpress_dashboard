@@ -270,19 +270,15 @@ function add_custom_admin_user_section() {
     ?>
     <div id="custom-sidebar-header">
         <div class="sidebar-logo">
-            <div class="logo-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                    <polyline points="2 17 12 22 22 17"/>
-                    <polyline points="2 12 12 17 22 12"/>
-                </svg>
+            <div class="logo-image">
+                <img src="https://bet-ces-cet.com/wp-content/uploads/2025/10/2-removebg-preview-e1759501498378.png" alt="Logo" style="width: auto; height: 50px; max-width: 100%;">
             </div>
             <div class="logo-text">
-                <span class="logo-name">Dashboard</span>
+                <span class="logo-name" style="font-size: 15px; line-height: 1.2;">Bet ces cet<br>zerrouki</span>
                 <span class="logo-version">v2.0</span>
             </div>
         </div>
-        <div class="sidebar-user">
+        <a href="<?php echo esc_url(get_edit_profile_url($current_user->ID)); ?>" class="sidebar-user" style="text-decoration: none; display: flex; color: inherit; cursor: pointer;">
             <div class="user-avatar">
                 <img src="<?php echo esc_url($avatar_url); ?>" alt="<?php echo esc_attr($current_user->display_name); ?>">
                 <span class="user-status"></span>
@@ -291,14 +287,14 @@ function add_custom_admin_user_section() {
                 <span class="user-name"><?php echo esc_html($current_user->display_name); ?></span>
                 <span class="user-role"><?php echo esc_html($user_role); ?></span>
             </div>
-            <button class="user-menu-toggle">
+            <div class="user-menu-toggle">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="1"/>
                     <circle cx="12" cy="5" r="1"/>
                     <circle cx="12" cy="19" r="1"/>
                 </svg>
-            </button>
-        </div>
+            </div>
+        </a>
         <div class="sidebar-search">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8"/>
@@ -642,16 +638,19 @@ function add_custom_admin_user_section() {
 add_action('admin_footer', 'add_custom_admin_user_section');
 
 function custom_admin_dashboard_styles() {
+    $screen = get_current_screen();
     ?>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 	
+    <?php if ($screen && $screen->id === 'dashboard'): ?>
 	body.wp-admin,
-html.wp-admin,
-#wpcontent,
-#wpbody,
-#wpbody-content {
-    background: #0f172a !important;
+    html.wp-admin,
+    #wpcontent,
+    #wpbody,
+    #wpbody-content {
+        background: #0f172a !important;
+    }
         body.wp-admin {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0f172a;
@@ -659,13 +658,6 @@ html.wp-admin,
 
         #wpcontent {
             background: #0f172a;
-            margin-left: 200px !important;
-        }
-        
-        @media only screen and (min-width: 961px) {
-            body.folded #wpcontent {
-                margin-left: 36px !important;
-            }
         }
 
         .wrap {
@@ -680,6 +672,17 @@ html.wp-admin,
         .wrap h1 {
             color: #f8fafc;
         }
+    <?php endif; ?>
+
+        #wpcontent {
+            margin-left: 200px !important;
+        }
+        
+        @media only screen and (min-width: 961px) {
+            body.folded #wpcontent {
+                margin-left: 36px !important;
+            }
+        }
 
         #adminmenuback,
         #adminmenuwrap {
@@ -690,7 +693,6 @@ html.wp-admin,
         #adminmenu {
             background: #0f172a;
             margin-top: 0 !important;
-            padding: 0 12px !important;
             width: 200px !important;
         }
 
@@ -716,17 +718,7 @@ html.wp-admin,
             margin-bottom: 24px;
         }
 
-        .logo-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-        }
+
 
         .logo-text {
             display: flex;
